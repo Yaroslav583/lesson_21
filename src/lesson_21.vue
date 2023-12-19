@@ -11,8 +11,7 @@
                 class="list-group-item d-flex justify-content-between align-items-center"
             >
               <div>
-                <input class="form-check-input" type="checkbox" id="termsCheck"  v-model="todoItem.complated" >
-
+                <input class="form-check-input" type="checkbox" id="termsCheck" :checked="todoItem.completed" @click="checkbox(todoItem)">
                 {{ todoItem.title }}
               </div>
               <div><small>{{ todoItem.description }}</small></div>
@@ -36,11 +35,13 @@
               <label for="form-title" class="form-label">Title</label>
               <input type="text" id="form-title" name="title" class="form-control" v-model="filledTodoItem.title">
               <div id="form-title-invalid-feedback" class="invalid-feedback"></div>
-              <textarea class="form-control mt-2" placeholder="Description..." v-model="filledTodoItem.description"></textarea>
-              <input type="checkbox" id="form-completed" name="completed" class="form-check-input" v-model="filledTodoItem.complated">
+              <textarea class="form-control mt-2" placeholder="Description..."
+                        v-model="filledTodoItem.description"></textarea>
+              <input type="checkbox" id="form-completed" name="completed" class="form-check-input"
+                     v-model="filledTodoItem.completed">
               <label for="form-completed" class="form-check-label">Completed</label>
-              <pre>{{filledTodoItem}}</pre>
-              <pre>{{todoList}}</pre>
+              <pre>{{ filledTodoItem }}</pre>
+              <pre>{{ todoList }}</pre>
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" @click="showFormModal = false">Close</button>
@@ -60,7 +61,8 @@
               This item "{{ deletedItem.title }}" will be deleted.
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-secondary" @click="showRemoveConfirmationModal = false">Cancel</button>
+              <button type="button" class="btn btn-secondary" @click="showRemoveConfirmationModal = false">Cancel
+              </button>
               <button type="button" class="btn btn-success" @click="remove()">Delete</button>
             </div>
           </form>
@@ -81,19 +83,19 @@ export default {
         uuid: null,
         title: null,
         description: null,
-        complated: false,
+        completed: false,
 
       },
       deletedItem: {},
 
-      /*
-       * Modals
-       */
       showFormModal: false,
       showRemoveConfirmationModal: false,
     }
   },
   methods: {
+    checkbox(todoItem) {
+      todoItem.completed = !todoItem.completed;
+    },
     create() {
       this.filledTodoItem = {
         uuid: null,
@@ -139,7 +141,7 @@ export default {
 }
 </script>
 <style>
-.modal-body{
+.modal-body {
   color: #181818;
 }
 </style>
